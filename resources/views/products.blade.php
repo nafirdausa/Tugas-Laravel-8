@@ -33,7 +33,6 @@
                         <div class="col-3">
                             <div class="card bg-white w-100">
                                 @if($item->image)
-                                {{-- <img class="rounded" src="{{ asset('storage/app/public/images' . $item->image) }}"> --}}
                                 <img class="rounded" src="{{ Storage::url($item->image) }}">
                                 @else
                                 <p>Tidak ada gambar product</p>

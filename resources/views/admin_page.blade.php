@@ -21,11 +21,6 @@
                         Produk</a>
                     <a href="{{ route('get_product') }}" class="btn btn-md btn-secondary fw-bold my-auto">Kembali ke Produk</a>
                 </div>
-                {{-- <div class="d-flex justify-content-end">
-                    <a href="{{ route('get_profile', $user->id) }}" class="btn btn-md btn-primary fw-bold my-auto me-1">Lihat Profil</a>
-                    <a href="{{ route('form_product', $user->id) }}" class="btn btn-md btn-dark fw-bold my-auto me-1">Tambah Produk</a>
-                    <a href="{{ route('get_product') }}" class="btn btn-md btn-secondary fw-bold my-auto">Kembali ke Produk</a>
-                </div>                 --}}
             </div>
             <table class="table table-striped w-100 mt-3">
                 <thead>

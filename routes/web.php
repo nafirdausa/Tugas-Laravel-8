@@ -25,5 +25,4 @@ Route::get('/{user}/product/{product}', [UserController::class, 'editProduct'])-
 Route::put('/{user}/product/{product}/update', [UserController::class, 'updateProduct'])->name('update_product');
 Route::post('/{user}/product/{product}/delete', [UserController::class, 'deleteProduct'])->name('delete_product');
 Route::get('/profile/{user}', [UserController::class, 'getProfile'])->name('get_profile');
-
 Route::get('/admin/{user}/list-products', [UserController::class, 'getAdmin'])->name('admin_page');

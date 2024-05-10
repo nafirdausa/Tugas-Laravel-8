@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductCreateRequest;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\User;
@@ -74,54 +73,16 @@ class UserController extends Controller
         return view('handle_request', ['user'=>$user]);
     }
 
-    // public function postRequest(Request $request, User $user){
-        
-    //     if(!$request->filled('image')){
-    //         return redirect()->back()->with('error', 'Error. File image Produk Wajib Diisi');
-    //     }elseif(!$request->filled('name')){
-    //         return redirect()->back()->with('error', 'Error. File name Produk Wajib Diisi');
-    //     }elseif(!$request->filled('weight')){
-    //         return redirect()->back()->with('error', 'Error. File weight Wajib Diisi');
-    //     }
-    //     elseif(!$request->filled('price')){
-    //         return redirect()->back()->with('error', 'Error. File Harga Wajib Diisi');
-    //     }
-    //     elseif(!$request->filled('stock')){
-    //         return redirect()->back()->with('error', 'Error. File stock Wajib Diisi');
-    //     }
-    //     elseif(!$request->filled('condition') || !in_array($request->condition, ['Baru', 'Bekas'])){
-    //         return redirect()->back()->with('error', 'Error. File condition Wajib Diisi');
-    //     }
-    //     elseif(!$request->filled('description')){
-    //         return redirect()->back()->with('error', 'Error. File description Wajib Diisi');
-    //     }
-
-    //     Product::create([
-    //         'user_id' => $user->id,
-    //         'image' => $request->image,
-    //         'name' => $request->name,
-    //         'condition' => $request->condition,
-    //         'stock' => $request->stock,
-    //         'weight' => $request->weight,
-    //         'price' => $request->price,
-    //         'description' => $request->description,
-    //     ]);
-    //      $imagePath = $request->file('image')->store('public/images/products');
-
-    //     return redirect()->route('admin_page', ['user'=>$user->id]);
-    // }
-
     public function postRequest(Request $request, User $user){
-        // Validasi input
         $validatedData = $request->validate([
-            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048', // maksimal 2MB
+            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
             'name' => 'required|string',
             'weight' => 'required|integer',
             'price' => 'required|integer',
             'stock' => 'required|integer',
             'condition' => 'required|in:Baru,Bekas',
-            'description' => 'required|max:2000', // maksimal 2000 karakter
-        ], [
+            'description' => 'required|max:2000',
+        ],[
             'image.required' => 'Kolom image harus diisi.',
             'name.required' => 'Kolom name harus diisi.',
             'weight.required' => 'Kolom weight harus diisi.',
@@ -134,11 +95,22 @@ class UserController extends Controller
             'image.max' => 'The image must not be greater than 2048 kilobytes.',
             'description.max' => 'The description must not be greater than 2000 characters.'
         ]);
-        
-        // Jika validasi gagal, redirect kembali dengan pesan kesalahan
-        return redirect()->route('admin_page', ['user' => $user->id])->withErrors($validatedData);
-    }
     
+        $imagePath = $request->file('image')->store('product_image', 'public');
+
+        Product::create([
+            'user_id' => $user->id,
+            'image' => $imagePath,
+            'name' => $request->name,
+            'condition' => $request->condition,
+            'stock' => $request->stock,
+            'weight' => $request->weight,
+            'price' => $request->price,
+            'description' => $request->description,
+        ]);
+    
+        return redirect()->route('admin_page', ['user'=>$user->id]);
+    }
     
 
     public function getProduct(){

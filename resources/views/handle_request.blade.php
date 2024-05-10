@@ -46,8 +46,6 @@
                         @enderror
                     </div>
                     <div class="mb-1">
-                        {{-- <label for="exampleFormControlInput1" class="form-label fw-semibold">Harga</label>
-                        <input type="number" class="form-control" name="price" placeholder="Masukkan harga produk"> --}}
                         <label for="price" class="form-label fw-semibold">price</label>
                         <input type="number" class="form-control form-control-sm" placeholder="Masukkan price produk" name="price" id="price" value="{{ old('price') }}">
                         @error('price')
